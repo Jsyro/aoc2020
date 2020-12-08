@@ -5,6 +5,8 @@ lines = input_file.readlines()
 
 max_seat_id = 0
 
+seats = []
+
 for line in lines:
     b_str = line.strip() 
     b_str = b_str.replace('B','1')
@@ -16,7 +18,9 @@ for line in lines:
     col = int(b_str[7:],2)
 
     seat_id =(row*8)+col
-    
+    seats.append(seat_id)
     max_seat_id = max([seat_id,max_seat_id])
 
+seats.sort()
+print(seats)#look for missing one
 print(max_seat_id)
