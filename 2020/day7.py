@@ -17,21 +17,45 @@ for line in lines:
         continue
     children = {' '.join(x.strip().split(' ')[1:]): int(x.strip().split(' ')[0]) for x in children_arr}
     contents[parent] = children
-pprint.pp(contents)
+# pprint.pp(contents)
 
 
-def find_all_parents(set_of_bags, contents):
-    init_size = len(set_of_bags)
-    for k,v in contents.items(): 
-        if not set_of_bags & set(v.keys()):
-            continue 
-        set_of_bags.add(k)
-    new_size = len(set_of_bags)
-    if init_size != new_size:
-        set_of_bags = find_all_parents(set_of_bags, contents)
-    return set_of_bags
+all_parents = set()
+def find_parent_tree(init_bag, contents, depth):
+    print('starting bag')
+    print(init_bag)
+    one_level_up_parents = set()
+    for k,v in contents.items():
+        if init_bag in v.keys():
+            print('found_parent')
+            one_level_up_parents.add(k)
+            all_parents.add(k)
+    if one_level_up_parents:
+        print('take another lap')
+        for p in one_level_up_parents:
+            print(p)
+            print('find all parents of')
+            find_parent_tree(p,contents,depth+1)
+    else:
+        print('all done')
+    return
 
-bags = set(['shiny gold'])
-bags = find_all_parents(bags,contents)
+find_parent_tree('shiny gold',contents,1)
+print(all_parents)
+print(len(all_parents))
 
-print(len(bags))
+# def find_all_parents(set_of_bags, contents):
+#     print(set_of_bags)
+#     init_size = len(set_of_bags)
+#     for k,v in contents.items(): 
+#         if any(i in set_of_bags for i in set(v.keys())):
+#             set_of_bags.add(k)
+#     new_size = len(set_of_bags)
+#     if init_size != new_size:
+#         set_of_bags = find_all_parents(set_of_bags, contents)
+#     return set_of_bags
+
+# bags = set(['shiny gold'])
+# bags = find_all_parents(bags,contents)
+
+# print(len(bags))
