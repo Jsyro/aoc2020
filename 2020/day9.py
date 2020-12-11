@@ -11,21 +11,34 @@ def x_sum_in_list(x, num, num_list):
     for (a,b) in itertools.combinations(num_list, 2):
         if a + b == num:
             found_parts = True 
-    # if found_parts
-    # print('find ' + str(num) + " in " + str(num_list))
+
     return found_parts
 
 window = []
+missing_no = 0
 for line in lines:
     number = int(line)
     if len(window) < 25:
         window.append(number)
         continue
-
     if not x_sum_in_list(25, number, window):
-        print(number)
-
+        missing_no = number
     window.append(number)
     window.pop(0)
 #part 2
+print(missing_no)
+
+var_window=[]
+for line in lines:
+    number = int(line)
+    if sum(var_window) == missing_no:
+        print(max(var_window)+min(var_window))
+        break
+    if sum(var_window) < missing_no:
+        var_window.append(number)
+    while sum(var_window) > missing_no:
+        var_window.pop(0)
+        if sum(var_window) == missing_no:
+            print(max(var_window)+min(var_window))
+            break
 
